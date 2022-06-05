@@ -11,7 +11,7 @@ function centerVideo(){
     wrapLoca.style.top = `calc(50vh - ${wrapLoca.offsetHeight / 2}px)`
     localStorage.setItem('playerTop', wrapLoca.style.top);
     localStorage.setItem('playerLeft', wrapLoca.style.left);
-    console.log("new location save", wrapLoca.style.left, wrapLoca.style.top)
+    // console.log("new location save", wrapLoca.style.left, wrapLoca.style.top)
 }
 
 function addVideo(){
@@ -54,7 +54,7 @@ function addVideo(){
                 window.videoPlayer.play()
             }
             playlist.appendChild(videoNeo)
-            console.log("window.playlist", window.playlist);
+            // console.log("window.playlist", window.playlist);
         })
         
     })
