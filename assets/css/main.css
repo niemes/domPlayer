@@ -178,6 +178,12 @@ button:hover, #addVideo:hover{
     background: #ffffff;
     color: #333333;
 }
+#headerTopbar {
+    align-items: center;
+    align-self: center;
+    display: flex;
+    justify-content: space-between;
+}
 #wrap {
     background-color: black;
     position: relative;
