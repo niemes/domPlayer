@@ -25,6 +25,7 @@
   <script type="text/javascript" src="./assets/js/libs/jquery.min.js"></script>
   <script type="text/javascript" src="./assets/js/libs/jquery-ui.js"></script>
   <script type="text/javascript" src="./assets/js/libs/bulma-slider.min.js"></script>
+  <script type="text/javascript" src="./assets/js/xNotif.js"></script>
   <link rel="stylesheet" type="text/css" href="./assets/css/jquery-ui.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
   crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -41,60 +42,6 @@
   <!-- Insert this line after script imports -->
   <script>if (window.module) module = window.module;</script>
   <script src="./renderer.js"></script>
-
-  <script>
-
-    var getAbsPosition = function(el){
-        var el2 = el;
-        var curtop = 0;
-        var curleft = 0;
-        if (document.getElementById || document.all) {
-            do  {
-                curleft += el.offsetLeft-el.scrollLeft;
-                curtop += el.offsetTop-el.scrollTop;
-                el = el.offsetParent;
-                el2 = el2.parentNode;
-                while (el2 != el) {
-                    curleft -= el2.scrollLeft;
-                    curtop -= el2.scrollTop;
-                    el2 = el2.parentNode;
-                }
-            } while (el.offsetParent);
-
-        } else if (document.layers) {
-            curtop += el.y;
-            curleft += el.x;
-        }
-        return [curtop, curleft];
-    };
-
-
-    $(document).ready(function() {
-      let wrapLoca = document.getElementById('wrap')
-      $("#wrap").draggable({
-        drag: function(e, ui){
-          let coords = getAbsPosition(wrapLoca)
-          // console.log("Drag - top", coords[0], "left", coords[1])
-          localStorage.setItem('playerTop', `${coords[0]}px`);
-          localStorage.setItem('playerLeft', `${coords[1]}px`);
-        },
-      }).resizable({
-        start: function(e, ui) {
-          // alert('resizing started');
-        },
-        resize: function(e, ui) {
-          // console.log("resize - width", wrapLoca.style.width, "height", wrapLoca.style.height)
-          if(window.onWindowResize) window.onWindowResize(true)
-          localStorage.setItem('playerWidth', wrapLoca.style.width);
-          localStorage.setItem('playerHeight', wrapLoca.style.height);
-        },
-        stop: function(e, ui) {
-          if(window.onWindowResize) window.onWindowResize(false)
-          
-        }
-      });
-    });
-  </script>
 
 </head>
 
@@ -174,8 +121,10 @@
     <progress id="progressBar" class="progress is-info" value="45" max="100">45%</progress>
   </div>
 
+<script src="./assets/js/positions.js"></script>
 
   <script>
+    const Notify = new XNotify("TopLeft");
     let optionPanel = document.getElementById('panel')
     let progres = document.getElementById('controls')
 
@@ -201,15 +150,11 @@
         if (event.key == "m" ) { // m for muted
           if (!videoPlayer.muted) videoPlayer.muted = true
           else videoPlayer.muted = false
-
         }
         
         if (event.key == " " ) { // space for pause
-          if (!videoPlayer.paused) {
-            videoPlayer.pause()
-          } else {
-            videoPlayer.play()
-          }
+          if (!videoPlayer.paused) videoPlayer.pause()
+          else videoPlayer.play()
         }
 
         if (event.key === "p") { // P for panel
