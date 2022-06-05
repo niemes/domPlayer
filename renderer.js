@@ -14,9 +14,8 @@ function centerVideo(){
     // console.log("new location save", wrapLoca.style.left, wrapLoca.style.top)
 }
 
+let currentPlaylist = []
 function addVideo(){
-    let emptyFlag = document.getElementById('emptyFlag')
-    let playlist = document.getElementById('playlist')
     
     const dialogConfig = {
         title: 'Select a file',
@@ -26,46 +25,62 @@ function addVideo(){
     
     electron.openDialog('showOpenDialog', dialogConfig)
     .then( (result) => {
-        console.log(result)
-        console.log('urlPath video local', result?.filePaths[0])
+        // console.log(result)
+        // console.log('urlPath video local', result?.filePaths[0])
         window.videoPlayer.src = result?.filePaths[0]
         window.videoPlayer.play()
-        
-        emptyFlag.style.display = "none"
-        result?.filePaths.forEach( (source) => {
-            let pathfull = source.split("/")
-            let filename = pathfull[pathfull.length - 1]
 
-            let videoNeo = document.createElement('li')
-            let delButton = document.createElement('button')
-            delButton.className = "delete is-small"
-            delButton.onclick = (event) => {
-                console.log("remove !!!")
-                removeVideo(event.srcElement.parentNode)
-            }
-            videoNeo.innerHTML = `<span class="hand">::</span>${filename}`
-            videoNeo.setAttribute("path", source);
-            videoNeo.setAttribute("index", playlist.getElementsByTagName('li').length);
-            videoNeo.appendChild(delButton)
-
-            videoNeo.onclick = () => {
-                videoPlayer.src = videoNeo.getAttribute('path')
-                window.curVideo = videoNeo.getAttribute('index')
-                window.videoPlayer.play()
-            }
-            playlist.appendChild(videoNeo)
-            // console.log("window.playlist", window.playlist);
-        })
-        
+        createPlaylist(result.filePaths)
     })
     .catch( (err) => {console.log("err", err)})
 
 }
 
+function createPlaylist(list){
+    let playlist = document.getElementById('playlist')
+    let emptyFlag = document.getElementById('emptyFlag')
+
+    emptyFlag.style.display = "none"
+
+    list?.forEach( (source) => {
+        currentPlaylist.push(source)
+        localStorage.setItem('playlist', currentPlaylist.join("|"));
+        let pathfull = source.split("/")
+        let filename = pathfull[pathfull.length - 1]
+
+        let videoNeo = document.createElement('li')
+        let delButton = document.createElement('button')
+        delButton.className = "delete is-small"
+        delButton.onclick = (event) => {
+            console.log("remove !!!")
+            removeVideo(event.srcElement.parentNode)
+        }
+        videoNeo.innerHTML = `<span class="hand">  </span>${filename}`
+        videoNeo.setAttribute("path", source);
+        videoNeo.setAttribute("index", playlist.getElementsByTagName('li').length);
+        videoNeo.appendChild(delButton)
+
+        videoNeo.onclick = () => {
+            videoPlayer.src = videoNeo.getAttribute('path')
+            window.curVideo = videoNeo.getAttribute('index')
+            window.videoPlayer.play()
+        }
+        playlist.appendChild(videoNeo)
+        // console.log("window.playlist", window.playlist);
+    })
+}
+
+
+
 function removeVideo(val) {
     var emptyFlag = document.getElementById('emptyFlag')
     var listElements = document.getElementById("playlist");
     listElements.removeChild(val);
+    let sourcePath = val.getAttribute("path")
+    console.log("check exist", currentPlaylist.indexOf(sourcePath), sourcePath)
+    if (currentPlaylist.indexOf(sourcePath) !== -1) {
+        currentPlaylist.splice(currentPlaylist.indexOf(),1);
+    }
 
     // If playlist is empty
     if (listElements.childElementCount == 1) {
@@ -74,4 +89,17 @@ function removeVideo(val) {
         window.videoPlayer.src = "./assets/preview.mp4";
         window.videoPlayer.play()
     }
+    //update playlist cache 
+    localStorage.setItem('playlist', currentPlaylist.join("|"));
 }
+
+// Init playlist
+document.addEventListener('DOMContentLoaded', ()=> {
+    let lastPlaylist = localStorage.getItem('playlist').split("|")
+    console.log("lastPlaylist", lastPlaylist)
+    if (lastPlaylist.length > 0) {
+        console.log("lastPlaylist", lastPlaylist)
+        createPlaylist(lastPlaylist)
+    }
+}, false);
+
