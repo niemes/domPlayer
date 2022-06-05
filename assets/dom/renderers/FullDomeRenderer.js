@@ -271,27 +271,19 @@ function startAnimation() {
     container.appendChild(canvas);
     
     // Setup Initial position
-    // localStorage.setItem('playerTop', 'Tom');
-    // localStorage.setItem('playerLeft', 'Tom');
 
     let playerTop = localStorage.getItem('playerTop');
     let playerLeft = localStorage.getItem('playerLeft');
     let playerWidth =  localStorage.getItem('playerWidth');
     let playerHeight = localStorage.getItem('playerHeight');
     
-    console.log("playerTop", playerTop, "playerLeft", playerLeft)
-    if (!playerLeft && !playerTop) {
-        container.style.left = `calc(50vw - ${container.offsetWidth / 2}px)`
-        container.style.top = `calc(50vh - ${container.offsetHeight / 2}px)`
-    } else {
-        container.style.left = playerTop
-        container.style.top = playerLeft
-    }
+    // console.log("playerTop", playerTop, "playerLeft", playerLeft)
+
+    container.style.left = playerLeft ?  playerLeft : `calc(50vw - ${container.offsetWidth / 2}px)`
+    container.style.top = playerTop ? playerTop : `calc(50vh - ${container.offsetHeight / 2}px)`
+    container.style.width = playerWidth ? playerWidth : "250px"
+    container.style.height = playerHeight ? playerHeight: "250px"
     
-    if (playerWidth && playerHeight) {
-        container.style.width = playerWidth
-        container.style.height = playerHeight
-    }
     const canvasNode = document.getElementById('mainVideoCanvas');
 
     // Call the user routine to setup the scene
@@ -300,10 +292,15 @@ function startAnimation() {
     scene.add(RendererConfig.camera.rig);
 
     const progress = document.getElementById("progressBar");
+    const slidControl = document.getElementById("slidControl");
+    slidControl.onchange = function() {
+        window.videoPlayer.currentTime = (this.value / 100) * window.videoPlayer.duration
+    }
     // The animation routine
     function animate() {
         
         progress.setAttribute("value", Math.round((window.videoPlayer.currentTime / window.videoPlayer.duration) * 100))
+        slidControl.setAttribute("value", Math.round((window.videoPlayer.currentTime / window.videoPlayer.duration) * 100))
 
         var dt = clock.getDelta();
         var t  = clock.getElapsedTime();
