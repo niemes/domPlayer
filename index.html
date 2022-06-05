@@ -21,8 +21,10 @@
   <!-- UI Dependencies & Drag and resize div using jqueryUI -->
   <link rel="stylesheet" href="./assets/css/bulma.min.css">
   <link rel="stylesheet" href="./assets/css/bulma_switch.css">
+  <link rel="stylesheet" href="./assets/css/slider.min.css">
   <script type="text/javascript" src="./assets/js/libs/jquery.min.js"></script>
   <script type="text/javascript" src="./assets/js/libs/jquery-ui.js"></script>
+  <script type="text/javascript" src="./assets/js/libs/bulma-slider.min.js"></script>
   <link rel="stylesheet" type="text/css" href="./assets/css/jquery-ui.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
   crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -168,24 +170,16 @@
 
       <h2 class="uk-divider-icon">Playlist:</h2>
 
-      <ul id='playlist'>
-      </ul>
-      
-      <h2 class="uk-divider-icon">Shortcuts:</h2>
-      <ul id="shortcuts">
-        <li>P - Open/close Panel</li>
-        <li>M - Muted</li>
-        <li>Space - pause/play Video</li>
-      </ul>
-      <p>Compatible video formats : .m4v / .mp4 / </p>
-    </div> -->
+  <div id="controls">
+    
+    <input class="slider is-fullwidth has-output-tooltip" id="slidControl" step="1" min="0" max="100" value="50" type="range">
+    <progress id="progressBar" class="progress is-info" value="45" max="100">45%</progress>
   </div>
 
-  <progress id="progressBar" class="progress is-info" value="45" max="100">45%</progress>
 
   <script>
     let optionPanel = document.getElementById('panel')
-    let progres = document.getElementById('progressBar')
+    let progres = document.getElementById('controls')
 
     function hidepanel(bool){
       if (!bool) {
