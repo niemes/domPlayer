@@ -75,11 +75,12 @@ function createPlaylist(list){
 function removeVideo(val) {
     var emptyFlag = document.getElementById('emptyFlag')
     var listElements = document.getElementById("playlist");
-    listElements.removeChild(val);
     let sourcePath = val.getAttribute("path")
-    console.log("check exist", currentPlaylist.indexOf(sourcePath), sourcePath)
-    if (currentPlaylist.indexOf(sourcePath) !== -1) {
-        currentPlaylist.splice(currentPlaylist.indexOf(),1);
+    let sourceIndex = currentPlaylist.indexOf(sourcePath)
+    listElements.removeChild(val);
+    
+    if ( sourceIndex !== -1) {
+        currentPlaylist.splice(sourceIndex,1);
     }
 
     // If playlist is empty
@@ -96,10 +97,6 @@ function removeVideo(val) {
 // Init playlist
 document.addEventListener('DOMContentLoaded', ()=> {
     let lastPlaylist = localStorage.getItem('playlist').split("|")
-    console.log("lastPlaylist", lastPlaylist)
-    if (lastPlaylist.length > 0) {
-        console.log("lastPlaylist", lastPlaylist)
-        createPlaylist(lastPlaylist)
-    }
+    if (lastPlaylist.length > 0) createPlaylist(lastPlaylist)
 }, false);
 
