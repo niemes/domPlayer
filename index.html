@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>DomPlayer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./assets/css/main.css">
+
+  <!-- video Player dependencies -->
+  <script src="./assets/dom/libs/three/three.js"></script>
+  <script src="./assets/dom/libs/es6-collections.min.js"></script>
+  <script src="./assets/dom/libs/es6-promise.min.js"></script>
+
+  <!-- Utility code that may be used by all scenes -->
+  <!-- <script src="./scenes/common.js"></script> -->
+  <!-- <script src="./interact/js/DomeMaster.js"></script> -->
+  <script type="module" src="./assets/js/playlist.js"></script>
+  <script type="module" src="./assets/dom/renderers/FullDomeRenderer.js"></script>
+  <!-- <script src="./scenes/video.js"></script> -->
+
+  <!-- UI Dependencies & Drag and resize div using jqueryUI -->
+  <link rel="stylesheet" href="./assets/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/css/bulma_switch.css">
+  <script type="text/javascript" src="./assets/js/libs/jquery.min.js"></script>
+  <script type="text/javascript" src="./assets/js/libs/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="./assets/css/jquery-ui.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+  crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="./assets/js/libs/Sortable.min.js"></script>
+
+  <script>
+    // console.log("INIT !")
+    // if (typeof peerJsInit === "function") peerJsInit();
+    
+  </script>
+  
+  <div class="drag-widget-container" id="wrap">
+  </div>
+  <!-- Insert this line after script imports -->
+  <script>if (window.module) module = window.module;</script>
+  <script src="./renderer.js"></script>
+
+  <script>
+    
+    $(document).ready(function() {
+      let wrapLoca = document.getElementById('wrap')
+      $("#wrap").draggable({
+        drag: function(e, ui){
+          console.log("Drag - top", wrapLoca.style.top, "left", wrapLoca.style.left)
+          localStorage.setItem('playerTop', wrapLoca.style.top);
+          localStorage.setItem('playerLeft', wrapLoca.style.left);
+        },
+        stop: function(e, ui){
+          // localStorage.setItem('playerTop', wrapLoca.style.top);
+          // localStorage.setItem('playerLeft', wrapLoca.style.left);
+          // console.log("new location save", wrapLoca.style.left, wrapLoca.style.top)
+        }
+      }).resizable({
+        start: function(e, ui) {
+          // alert('resizing started');
+        },
+        resize: function(e, ui) {
+          console.log("resize - width", wrapLoca.style.width, "height", wrapLoca.style.height)
+          if(window.onWindowResize) window.onWindowResize(true)
+          localStorage.setItem('playerWidth', wrapLoca.style.width);
+          localStorage.setItem('playerHeight', wrapLoca.style.height);
+        },
+        stop: function(e, ui) {
+          if(window.onWindowResize) window.onWindowResize(false)
+          
+        }
+      });
+    });
+  </script>
+
+</head>
+
+<body>
+  <div id="electron-titlebar" class="drag top-titlebar"  style="-webkit-app-region: drag">
+    <nav style="-webkit-app-region: drag; -webkit-user-select: none;">
+    </nav>
+  </div>
+
+  
+  <div id="panel" class="panel is-primary container card">
+    <p class="panel-heading">
+      DomPlayer Options
+    </p>
+    <p class="panel-tabs">
+      <a class="is-active">All</a>
+      <a>Config</a>
+      <a>Controls</a>
+      <a>help</a>
+      <a>About</a>
+      
+    </p>
+
+      
+    <h2 class="title is-5 titles">Mod</h2>
+    <a class="panel-block is-active">
+      <label class="panel-block">
+        <h2 class="Title 6" style="margin-right:10px">Normal</h2>
+        <div class="field">
+          <input id="switchExample" type="checkbox" name="switchExample" class="switch" checked="checked">
+          <label for="switchExample">Half Dome</label>
+        </div>
+      </label>
+    </a>
+    <div class="panel-block">
+      <button class="button is-small is-rounded" onclick="centerVideo()">
+        <span class="icon is-small">
+          <i class="fas fa-circle"></i>
+        </span>
+        <span>Center video</span> 
+      </button>
+    </div>
+      <h2 class="title is-5 titles">Playlist</h2>
+
+      <div class="card">
+        <div class="card-content">
+          <div class="content">
+            <ul id='playlist'><h2 class="title is-5" id="emptyFlag""">Empty...</h2></ul>
+          </div>
+      </div>
+
+    <a class="panel-block" id="playlistWrap">
+      
+      
+      
+      </div>
+    </a>
+    
+    <div class="panel-block">
+      <button class="button is-link is-outlined is-fullwidth" onclick="addVideo()">
+        Add Video
+      </button>
+    </div>
+
+    <div class="card">
+      <div class="card-content">
+        <p class="title title is-5">
+          Info
+        </p>
+        <p class="subtitle is-6">
+          Shortcuts
+        </p>
+        <ul id="shortcuts">
+          <li>P - Open/close Panel</li>
+          <li>M - Muted</li>
+          <li>Space - pause/play Video</li>
+        </ul>
+      </div>
+      <footer class="card-footer">
+        <p class="card-footer-item">
+          <span>
+            View on <a href="https://twitter.com/codinghorror/status/506010907021828096">Twitter</a>
+          </span>
+        </p>
+        <p class="card-footer-item">
+          <span>
+            Share on <a href="#">Facebook</a>
+          </span>
+        </p>
+      </footer>
+    </div>
+    <!-- <div id="panelWrap" class="">
+      <button class="uk-button uk-button-default uk-button-small" id="addVideo" onclick="addVideo()">Add Video</button>
+
+      <h2 class="uk-divider-icon">Playlist:</h2>
+
+      <ul id='playlist'>
+      </ul>
+      
+      <h2 class="uk-divider-icon">Shortcuts:</h2>
+      <ul id="shortcuts">
+        <li>P - Open/close Panel</li>
+        <li>M - Muted</li>
+        <li>Space - pause/play Video</li>
+      </ul>
+      <p>Compatible video formats : .m4v / .mp4 / </p>
+    </div> -->
+  </div>
+
+  <progress id="progressBar" class="progress is-info" value="45" max="100">45%</progress>
+
+  <script>
+    let optionPanel = document.getElementById('panel')
+    let progres = document.getElementById('progressBar')
+
+    function hidepanel(bool){
+      if (!bool) {
+        optionPanel.style.right = "15px"
+        optionPanel.style.opacity = 1
+        progres.style.opacity = 1
+      } else {
+        optionPanel.style.right = "-315px"
+        optionPanel.style.opacity = 0
+        progres.style.opacity = 0
+      }
+    }
+
+    document.addEventListener("keydown", function(event) {
+      // console.log("event.key", event.key)
+      let usedKeys = ["p", " ", "m"]
+
+    if (usedKeys.indexOf(event.key) !== -1) { // touche - debug info
+        event.preventDefault();
+
+        if (event.key == "m" ) { // m for muted
+          if (!videoPlayer.muted) videoPlayer.muted = true
+          else videoPlayer.muted = false
+
+        }
+        
+        if (event.key == " " ) { // space for pause
+          if (!videoPlayer.paused) {
+            videoPlayer.pause()
+          } else {
+            videoPlayer.play()
+          }
+        }
+
+        if (event.key === "p") { // P for panel
+          event.preventDefault();
+          if(optionPanel.style.opacity == 0) hidepanel(false)
+          else hidepanel(true)
+        }
+    }
+});
+  </script>
+    
+</body>
+
+</html>

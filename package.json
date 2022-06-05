@@ -1,0 +1,65 @@
+{
+  "name": "domplayer",
+  "version": "1.0.0",
+  "description": "DomPlayer simple Video Player for Half Dome or exhibition",
+  "homepage": "https://niemes.info",
+  "author": "Niemeskern Kévin <kevin@niemes.info>",
+  "main": "main.js",
+  "scripts": {
+    "install": "electron-rebuild",
+    "pack": "electron-builder -mwl --publish never",
+    "start": "electron . --disable-http-cache",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup": "npm install && ./node_modules/.bin/electron-rebuild",
+    "postinstall": "electron-builder install-app-deps",
+    "package-mac": "electron-builder --macos",
+    "package-win": "electron-builder --win",
+    "package-linux": "electron-builder --linux deb"
+  },
+  "build": {
+    "appId": "com.example.app",
+    "copyright": "Copyleft © 2020 ${author}",
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "zip",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  },
+  "repository": "https://niemes.info/software",
+  "keywords": [
+    "dom",
+    "half dome",
+    "videoplayer",
+    "art",
+    "niemes"
+  ],
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^19.0.3"
+  }
+}
