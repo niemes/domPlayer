@@ -15,6 +15,10 @@ canvas {
     padding: 0;
     box-sizing: border-box;
 }
+#logo{
+    width: 45px;
+    height: 45px;
+}
 .ui-widget-content {
     border: 1px solid black;
     background: #ffffff;
@@ -188,10 +192,17 @@ button:hover, #addVideo:hover{
     width: 40%;
 }
 
-#progressBar{
+#controls{
     position: absolute;
-    bottom: 0px;
+    bottom: 30px;
     width: calc(70vw - 300px);
     margin-left: 10vh ;
+    opacity: 0;
+}
+#slidControl{
+    position: absolute;
+    top: -20px;
+    left: 0;
+    z-index: 999999;
     opacity: 0;
 }
