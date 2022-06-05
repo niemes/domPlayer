@@ -118,8 +118,11 @@ canvas {
 }
 #playlist li span{
     position: absolute;
-    left: 3px;
+    left: 0;
     top: 0;
+    background: antiquewhite;
+    height: 100%;
+    width: 14px;
 }
 #playlist li:hover{
     border: solid black 1px;
