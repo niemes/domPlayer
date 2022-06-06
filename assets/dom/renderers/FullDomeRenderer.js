@@ -3,7 +3,9 @@
  *   https://github.com/spite/THREE.CubemapToEquirectangular
  */
 
-import {initPlaylist} from '../../js/playlist.js'
+let initDom = function() {
+    startAnimation()
+}
 
 const inchesToMeters     = 0.0254;
 const feetToMeters       = 0.3048;
@@ -205,44 +207,6 @@ function setupScene(scene) {
     var geometry = new THREE.SphereBufferGeometry( RendererConfig.dome.radius, 60, 40 );
     geometry.scale( -1, 1, 1 );
 
-    window.videoPlayer = document.createElement('video');
-    window.videoPlayer.id = "window.videoPlayerplayer"
-    window.videoPlayer.width  = 1024;
-    window.videoPlayer.height =  640;
-    window.videoPlayer.loop = false;
-    window.videoPlayer.loopPlaylist = true
-    window.videoPlayer.muted  = true;
-
-    window.videoPlayer.src = "./assets/preview.mp4";
-    window.videoPlayer.setAttribute( 'webkit-playsinline', 'webkit-playsinline' );
-    window.videoPlayer.setAttribute( 'playsinline', 'playsinline' );
-    window.videoPlayer.setAttribute( 'crossorigin', 'anonymous' );
-    window.videoPlayer.play();
-
-    window.curVideo = 0;
-    
-    window.videoPlayer.onended = function () {
-        let playlistVideos = window.playlist.el.getElementsByTagName("li")
-
-        if (playlistVideos.length !== 0) {
-            window.curVideo++;
-            // go to next video in the playlist
-            if (window.curVideo < playlistVideos.length) {
-                // console.log("try to switch no next video", playlistVideos[window.curVideo]);
-                window.videoPlayer.src = playlistVideos[window.curVideo].getAttribute('path');
-                window.videoPlayer.play()
-            }
-            // last video of the playlist loop back to the begining.
-            else if (window.curVideo == playlistVideos.length && window.videoPlayer.loopPlaylist){
-                window.curVideo = 0;
-                window.videoPlayer.src = playlistVideos[window.curVideo].getAttribute('path');
-                window.videoPlayer.play()
-            }
-        } else {
-            window.curVideo = 0
-            window.videoPlayer.play()
-        }
-    }
     // iOS require the video to start muted in order for it to autoplay, so we use a click
     // to enable the sound.
     // document.getElementsByTagName("canvas")[0].addEventListener("click",
@@ -363,7 +327,9 @@ if(window.onRendererReady) {
 }
 
 window.onload = function () {
-    initPlaylist()
-    startAnimation()
+    // initPlaylist()
+    // startAnimation()
     window.onWindowResize(true)
 };
+
+export {initDom}
