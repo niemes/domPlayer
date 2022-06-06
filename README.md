@@ -2,7 +2,7 @@
 	<img width="200" height="200" margin-right="100%" src="./build/icons/icon_256x256.png?raw=true">
 </p>
 <p align="center">
-	<a href="https://lab.niemes.info/niemes/domplayer/releases">
+	<a href="https://github.com/niemes/domPlayer/releases">
  		<img src="https://img.shields.io/badge/download-latest-brightgreen.svg" alt="download">
 	</a>
 	<a href="https://img.shields.io/badge/platform-macOS-lightgrey.svg">
