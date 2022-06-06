@@ -14,9 +14,9 @@
 
 ## Description: 
 
-DomPlayer is a simple videoPlayer with feature usefull for projection.
-- Move / Resize the video in the view for a projection. 
-- Dom mode - Dom deformation on dom / half dome.
+A simple video player with usefull features for video projections.
+- Move / Resize the video in the view. 
+- Dom mode - Dom deformation for Dome / Half Dome.
 - playlist support
 
 ## Install : 
