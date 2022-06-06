@@ -1,24 +1,40 @@
 ![alt text][logo]
 
-THREE.js Dome Experiments
-=========================
+<p align="center">
+	<img width="200" height="200" margin-right="100%" src="./build/icons/icon_512x512.png?raw=true">
+</p>
+<p align="center">
+	<a href="https://github.com/niemes/expomod/releases/latest">
+ 		<img src="https://img.shields.io/badge/download-latest-brightgreen.svg" alt="download">
+	</a>
+	<a href="https://img.shields.io/badge/platform-macOS-lightgrey.svg">
+ 		<img src="https://img.shields.io/badge/platform-macOS-lightgrey.svg" alt="platform">
+	</a>
+	<a href="https://img.shields.io/badge/requirements-window +-ff69b4.svg">
+ 		<img src="https://img.shields.io/badge/requirements-window +-ff69b4.svg" alt="systemrequirements">
+	</a>
+    <a href="https://img.shields.io/badge/requirements-linux deb+-ff69b4.svg">
+ 		<img src="https://img.shields.io/badge/requirements-linux deb+-ff69b4.svg" alt="systemrequirements">
+	</a>
+</p>
 
-This repository code for building THREE.js content for dome theaters and virtual reality. This project is an outgrowth of my participation in [DomeLab].
+# DomPlayer 
 
-Click this [link](http://marciot.com/dome-experiments) for online demonstrations.
+## Description: 
 
-## How to see the demos:
+DomPlayer is a simple videoPlayer with feature usefull for projection.
+- Move / Resize the video in the view for a projection. 
+- Dom mode - Dom deformation on dom / half dome.
+- playlist support
 
-Projection on a dome theater can be done by using [CefWithSyphon] and [Blendy Dome VJ]. You can also see the demos on your PC or smartphone in virtual reality.
+## Install : 
 
-## Viewing the demos in virtual reality:
+Download the last release.
+## Licensing:
+- Affero GPL license.
 
-The WebVRRenderer and WebVRDomeRenderer should work on all major headsets, including Cardboard, or can be used on any smartphone or PC without a headset.
+# References : 
 
-__GearVR:__ You must download the [Samsung Internet Browser for Gear VR] from the _Oculus Store_ Android app. You must then visit the demo page while in VR.
-
-__Oculus Rift and HTC Vive:__ Rift and Vive users must visit the demo page using an experimental [WebVR] version of [Chrome] or [Firefox].
-        
 ## Resources:
 
 * [THREE.CubemapToEquirectangular] - Code from which I built the PanoramaRenderer.
@@ -27,13 +43,6 @@ __Oculus Rift and HTC Vive:__ Rift and Vive users must visit the demo page using
 * [WebVR Polyfill] - Information on the WebVR polyfil used in the renderers
 * [THREE.js] - The JavaScript graphics library used in these demos
 
-## Licensing:
-
-I am a strong believer in open source. As such, this code has been released under the Affero GPL license.
-
-## How can you help this project?
-
-Please visit my [Patreon page] to learn how you can support this open-source project with a donation!
 
 [logo]: https://github.com/marciot/dome-experiments/raw/master/images/banner2.jpg "A dome screenshot"
 [DomeLab]: https://www.facebook.com/groups/DomeLab
