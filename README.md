@@ -1,5 +1,5 @@
 <p align="center">
-	<img width="200" height="200" margin-right="100%" src="./build/icons/icon_512x512.png?raw=true">
+	<img width="200" height="200" margin-right="100%" src="./build/icons/icon_256x256.png?raw=true">
 </p>
 <p align="center">
 	<a href="https://github.com/niemes/expomod/releases/latest">
