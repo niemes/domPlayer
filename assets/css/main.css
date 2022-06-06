@@ -228,8 +228,14 @@ button:hover, #addVideo:hover{
     opacity: 0;
 }
 
-
-
+#viewControls{
+    display: flex;
+    justify-content: space-evenly;
+}
+#playerControls{
+    display: flex;
+    justify-content: center;
+}
 /* -_--____--____---___---___ NOTIFICATIONS */
 
 .note{

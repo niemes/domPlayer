@@ -15,19 +15,23 @@
   <!-- <script src="./scenes/common.js"></script> -->
   <!-- <script src="./interact/js/DomeMaster.js"></script> -->
   <script type="module" src="./assets/js/playlist.js"></script>
+  <script type="module" src="./assets/js/player.js"></script>
+  <script type="module" src="./assets/js/domUtils.js"></script>
   <script type="module" src="./assets/dom/renderers/FullDomeRenderer.js"></script>
   <!-- <script src="./scenes/video.js"></script> -->
 
-  <!-- UI Dependencies & Drag and resize div using jqueryUI -->
-  <link rel="stylesheet" href="./assets/css/bulma.min.css">
-  <link rel="stylesheet" href="./assets/css/bulma_switch.css">
-  <link rel="stylesheet" href="./assets/css/slider.min.css">
   <script type="text/javascript" src="./assets/js/libs/jquery.min.js"></script>
   <script type="text/javascript" src="./assets/js/libs/jquery-ui.js"></script>
   <script type="text/javascript" src="./assets/js/libs/bulma-slider.min.js"></script>
   <script type="text/javascript" src="./assets/js/libs/bulma-toast.min.js"></script>
+  
+  <!-- UI Dependencies & Drag and resize div using jqueryUI -->
+  <link rel="stylesheet" href="./assets/css/bulma.min.css">
+  <link rel="stylesheet" href="./assets/css/bulma_switch.css">
+  <link rel="stylesheet" href="./assets/css/slider.min.css">
+
   <link rel="stylesheet" type="text/css" href="./assets/css/jquery-ui.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+  <link rel="stylesheet" type="text/css" href="./assets/css/fontawesome.min.css"
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="./assets/js/libs/Sortable.min.js"></script>
 
@@ -41,7 +45,7 @@
   </div>
   <!-- Insert this line after script imports -->
   <script>if (window.module) module = window.module;</script>
-  <script src="./renderer.js"></script>
+  <script src="./renderer.js" type="module"></script>
 
 </head>
 
@@ -68,6 +72,7 @@
 
     <div id="tab-content">
 
+      <!-- ---___---_______---___---___---________--____---___--___ TABS CONFIG -->
       <div class="is-active" data-content="1">
         <a class="panel-block is-active">
           <label class="panel-block">
@@ -77,13 +82,31 @@
             </div>
           </label>
         </a>
-        <div class="panel-block">
-          <button class="button is-small is-rounded" onclick="centerVideo()">
-            <span class="icon is-small">
-              <i class="fas fa-circle"></i>
-            </span>
-            <span>Center video</span>
-          </button>
+        <div class="panel-block" id="viewControls">
+
+          <div>
+            <button id="center" class="button is-small is-light" onclick="centerVideo()">
+              <span class="icon is-small"><i class="fas fa-arrows-to-dot"></i></span>
+            </button>
+          </div>
+
+          <div id="playerControls">
+            <button id="play" active="false" class="button is-small is-light" onclick="window.control('play', this)">
+              <span class="icon is-small"><i class="fas fa-play"></i></span>
+            </button>
+            <button id="pause" active="false" class="button is-small is-light" onclick="window.control('pause', this)">
+              <span class="icon is-small"><i class="fas fa-pause"></i></span>
+            </button>
+            <button id="previous" active="false" class="button is-small is-light" onclick="window.control('previous', this)">
+              <span class="icon is-small"><i class="fas fa-backward"></i></span>
+            </button>
+            <button id="next" active="false" class="button is-small is-light" onclick="window.control('next', this)">
+              <span class="icon is-small"><i class="fas fa-forward"></i></span>
+            <button id="loop" active="false" class="button is-small is-light" onclick="window.control('loop', this)">
+              <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+            </button>
+          </div>
+          
         </div>
         <h2 class="title is-5 titles">Playlist</h2>
 
@@ -96,7 +119,7 @@
             </div>
           </div>
           <div class="panel-block">
-            <button class="button is-link is-outlined is-fullwidth" onclick="addVideo()">
+            <button class="button is-link is-outlined is-fullwidth" onclick="window.player.playlist.addVideo()">
               Add Video
             </button>
           </div>
@@ -180,68 +203,7 @@
 
   <script>
 
-    let optionPanel = document.getElementById('panel')
-    let progres = document.getElementById('controls')
-
-
-    function hidepanel(bool) {
-      if (!bool) {
-        optionPanel.style.right = "15px"
-        optionPanel.style.opacity = 1
-        progres.style.opacity = 1
-      } else {
-        optionPanel.style.right = "-315px"
-        optionPanel.style.opacity = 0
-        progres.style.opacity = 0
-      }
-    }
-
-    function miam(mess, type, duration = 1000){
-      bulmaToast.toast({
-        message: mess, 
-        type: type,
-        dismissible: true,
-        duration: duration,
-        position: "top-left",
-        "single": false,
-        // animate: { in: 'fadeIn', out: 'fadeOut' }
-      })
-    }
-    document.addEventListener("keydown", function (event) {
-      // console.log("event.key", event.key)
-      let usedKeys = ["p", " ", "m"]
-
-      if (usedKeys.indexOf(event.key) !== -1) { // touche - debug info
-        event.preventDefault();
-
-        if (event.key == "m") { // m for muted
-          if (!videoPlayer.muted) videoPlayer.muted = true
-          else videoPlayer.muted = false
-          // notif("success", "mute", videoPlayer.muted)
-          miam( videoPlayer.muted ? "Mute" : "Unmute", 'is-primary' )
-        }
-
-        if (event.key == " ") { // space for pause
-          if (!videoPlayer.paused) {
-            videoPlayer.pause()
-            miam('Video Paused.','is-primary')
-          }
-          else {
-            videoPlayer.play()
-            miam('Video is playing.','is-primary')
-          }
-          
-        }
-
-        if (event.key === "p") { // P for panel
-          event.preventDefault();
-          if (optionPanel.style.opacity == 0) hidepanel(false)
-          else hidepanel(true)
-        }
-      }
-    });
-
-    miam( "Press 'P' to open the Menu.", 'is-info', 4000)
+    
   </script>
 
 </body>
