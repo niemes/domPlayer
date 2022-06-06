@@ -44,7 +44,6 @@ class Playlist {
                 delButton.className = "delete is-small"
         
                 delButton.addEventListener('click', function (event) {
-                    console.log("db click")
                     self.removeVideo(event.srcElement.parentNode)
                 });
         

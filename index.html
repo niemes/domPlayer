@@ -24,15 +24,15 @@
   <script type="text/javascript" src="./assets/js/libs/jquery-ui.js"></script>
   <script type="text/javascript" src="./assets/js/libs/bulma-slider.min.js"></script>
   <script type="text/javascript" src="./assets/js/libs/bulma-toast.min.js"></script>
-  
+
   <!-- UI Dependencies & Drag and resize div using jqueryUI -->
   <link rel="stylesheet" href="./assets/css/bulma.min.css">
   <link rel="stylesheet" href="./assets/css/bulma_switch.css">
   <link rel="stylesheet" href="./assets/css/slider.min.css">
 
   <link rel="stylesheet" type="text/css" href="./assets/css/jquery-ui.css" />
-  <link rel="stylesheet" type="text/css" href="./assets/css/fontawesome.min.css"
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" type="text/css" href="./assets/css/fontawesome.min.css" crossorigin="anonymous"
+    referrerpolicy="no-referrer" />
   <script src="./assets/js/libs/Sortable.min.js"></script>
 
   <script>
@@ -85,7 +85,7 @@
         <div class="panel-block" id="viewControls">
 
           <div>
-            <button id="center" class="button is-small is-light" onclick="centerVideo()">
+            <button id="center" class="button is-small is-light" onclick="window.utils.centerVideo()">
               <span class="icon is-small"><i class="fas fa-arrows-to-dot"></i></span>
             </button>
           </div>
@@ -97,16 +97,17 @@
             <button id="pause" active="false" class="button is-small is-light" onclick="window.control('pause', this)">
               <span class="icon is-small"><i class="fas fa-pause"></i></span>
             </button>
-            <button id="previous" active="false" class="button is-small is-light" onclick="window.control('previous', this)">
+            <button id="previous" active="false" class="button is-small is-light"
+              onclick="window.control('previous', this)">
               <span class="icon is-small"><i class="fas fa-backward"></i></span>
             </button>
             <button id="next" active="false" class="button is-small is-light" onclick="window.control('next', this)">
               <span class="icon is-small"><i class="fas fa-forward"></i></span>
-            <button id="loop" active="false" class="button is-small is-light" onclick="window.control('loop', this)">
-              <span class="icon is-small"><i class="fas fa-retweet"></i></span>
-            </button>
+              <button id="loop" active="false" class="button is-small is-light" onclick="window.control('loop', this)">
+                <span class="icon is-small"><i class="fas fa-retweet"></i></span>
+              </button>
           </div>
-          
+
         </div>
         <h2 class="title is-5 titles">Playlist</h2>
 
@@ -125,12 +126,58 @@
           </div>
         </div>
       </div>
-  
+
+      <!-- -___---___---___--____--____--__---___--___--___--___--___--___--- Controls TAB -->
       <div class="" data-content="2">
-        <p></p> controls tab
-        <a class="panel-block is-active">CONTROLS tab</a>
+
+        <a class="panel-block is-active">
+          <div class="card">
+            <div class="card-content">
+              <p class="title title is-5">Controls tab</p>
+              <p class="subtitle is-6">
+                Work In Progress :
+              </p>
+              <p>
+                Need to add the differents controls for the Dom mode.
+              
+              </p>
+          </div>
+
+          <div class="dropdown is-active">
+            <div class="dropdown-trigger">
+              <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                <span>Dome type</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a href="#" class="dropdown-item">
+                  Half Dome
+                </a>
+                <a class="dropdown-item">
+                  Full Dome
+                </a>
+                <a href="#" class="dropdown-item is-active">
+                  Active dropdown item
+                </a>
+                <a href="#" class="dropdown-item">
+                  Other dropdown item
+                </a>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item">
+                  With a divider
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        </a>
       </div>
-    
+
       <div class="" data-content="3">
         <div class="card">
           <div class="card-content">
@@ -145,7 +192,7 @@
               <li>M - Muted</li>
               <li>Space - pause/play Video</li>
             </ul>
-  
+
             <p class="subtitle is-6">
               compatible Videos format
             </p>
@@ -156,7 +203,7 @@
           </div>
         </div>
       </div>
-  
+
       <div class="" data-content="4">
         <a class="panel-block is-active">ABOUT</a>
         <div class="card">
@@ -174,16 +221,16 @@
             </p>
             <p>
               Domplayer allow you to easely play a video on an half dome and set the size en position of
-              the video. 
+              the video.
             </p>
           </div>
           <footer class="card-footer">
-            <a href="https://niemes.info"" class="card-footer-item">
+            <a href="https://niemes.info"" class=" card-footer-item">
               <span>Made with <span>
-                <span class="icon is-small">
-                  <i class="fas fa-heart"></i>
-                </span>
-                <span>by Niemeskern Kévin</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-heart"></i>
+                  </span>
+                  <span>by Niemeskern Kévin</span>
             </a>
           </footer>
         </div>
@@ -203,7 +250,7 @@
 
   <script>
 
-    
+
   </script>
 
 </body>

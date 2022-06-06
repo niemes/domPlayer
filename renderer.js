@@ -9,17 +9,19 @@
     // init DomRenderer
     // domUtils
     
-import { domUtils } from './assets/js/domUtils.js'
+import { Utils } from './assets/js/domUtils.js'
 import { MainPlayer } from './assets/js/player.js'
 import { initDom } from './assets/dom/renderers/FullDomeRenderer.js'
-
-domUtils()
 
 let player = new MainPlayer()
 player.playlist.initPlaylist()
 player.initPlayer()
-initDom()
 
+initDom()
+let utils = new Utils()
+utils.initEvents()
+
+window.utils = utils
 window.player = player
 window.control = player.ctrlPlayer
 

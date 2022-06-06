@@ -52,7 +52,6 @@ class MainPlayer {
                 elem.setAttribute('active', swap)
                 localStorage.setItem('loop', swap);
 
-                console.log("swap", swap)
                 if (swap) elem.className = clactive
                 else elem.className = baseClass
             }
@@ -102,7 +101,6 @@ class MainPlayer {
                 delButton.className = "delete is-small"
 
                 delButton.addEventListener('dblclick', function (event) {
-                    console.log("db click")
                     removeVideo(event.srcElement.parentNode)
                 });
 
@@ -166,9 +164,6 @@ class MainPlayer {
 
                 if (playlistVideos.length !== 0) {
                     window.curVideo++;
-                    console.log("looping", looping)
-                    console.log("window.curVideo", window.curVideo, playlistVideos.length, window.curVideo < playlistVideos.length - 1)
-
                     // go to next video in the playlist
                     if (window.curVideo < playlistVideos.length) {
                         // console.log("try to switch no next video", playlistVideos[window.curVideo]);
@@ -177,12 +172,10 @@ class MainPlayer {
                     }
                     // last video of the playlist loop back to the begining.
                     else if (window.curVideo >= playlistVideos.length - 1&& looping == "true") {
-                        console.log("is looping ? !", looping)
                         window.curVideo = 0;
                         window.videoPlayer.src = playlistVideos[window.curVideo].getAttribute('path');
                         window.videoPlayer.play()
                     } else {
-                        console.log("playlist end")
                         window.curVideo = 0
                     }
                 } else {
@@ -190,14 +183,10 @@ class MainPlayer {
                     window.videoPlayer.play()
                 }
             }
-            console.log("init loop", this.config.loop())
-            this.button.loop.setAttribute('active', this.config.loop() ? "true" : "false")
 
-            console.log("test loop", this.config.loop() == "true" ? clactive : baseClass)
+            this.button.loop.setAttribute('active', this.config.loop() ? "true" : "false")
             this.button.loop.className = ""
             this.button.loop.className = this.config.loop() == "true" ? clactive : baseClass
-
-            console.log("className = ", this.button.loop.className)
         }
         
     }

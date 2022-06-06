@@ -21,8 +21,8 @@ let RendererConfig = {
         animate the viewpoint */
         rig:        null,
         near:       .01, // .1,
-        far:        1000,
-        cubeMapSize: 1024
+        far:        10000,
+        cubeMapSize: 2048 // default 1024
     },
     dome: {
         radius:             35.0 * feetToMeters / 2,
@@ -40,8 +40,8 @@ let RendererConfig = {
 // }
 
 /* Trick for inline strings for GLSL code:
-     http://stackoverflow.com/questions/805107/creating-multiline-strings-in-javascript
- */
+    http://stackoverflow.com/questions/805107/creating-multiline-strings-in-javascript
+*/
 Function.prototype.getComment = function() {
     var startComment = "/*!";
     var endComment = "*/";
@@ -325,11 +325,5 @@ function startAnimation() {
 if(window.onRendererReady) {
     window.onRendererReady();
 }
-
-window.onload = function () {
-    // initPlaylist()
-    // startAnimation()
-    window.onWindowResize(true)
-};
 
 export {initDom}
