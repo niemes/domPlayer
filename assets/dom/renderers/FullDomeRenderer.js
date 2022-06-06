@@ -326,4 +326,10 @@ if(window.onRendererReady) {
     window.onRendererReady();
 }
 
+window.onload = function () {
+    // initPlaylist()
+    // startAnimation()
+    window.onWindowResize(true)
+};
+
 export {initDom}
