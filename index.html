@@ -41,7 +41,7 @@
   </div>
   <!-- Insert this line after script imports -->
   <script>if (window.module) module = window.module;</script>
-  <script src="./renderer.js" type="module"></script>
+  <script src="./renderer.js"></script>
 
 </head>
 
@@ -196,12 +196,12 @@
       }
     }
 
-    function miam(mess, type){
+    function miam(mess, type, duration = 1000){
       bulmaToast.toast({
         message: mess, 
         type: type,
         dismissible: true,
-        duration: 1000,
+        duration: duration,
         position: "top-left",
         "single": false,
         // animate: { in: 'fadeIn', out: 'fadeOut' }
@@ -240,6 +240,8 @@
         }
       }
     });
+
+    miam( "Press 'P' to open the Menu.", 'is-info', 4000)
   </script>
 
 </body>
