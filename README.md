@@ -1,5 +1,3 @@
-![alt text][logo]
-
 <p align="center">
 	<img width="200" height="200" margin-right="100%" src="./build/icons/icon_512x512.png?raw=true">
 </p>
