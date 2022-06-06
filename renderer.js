@@ -4,6 +4,7 @@
 // `nodeIntegration` is turned off. Use `preload.js` to
 // selectively enable features needed in the rendering
 // process.
+
 function centerVideo(){
     let wrapLoca = document.getElementById('wrap')
 
@@ -18,15 +19,16 @@ let currentPlaylist = []
 function addVideo(){
     
     const dialogConfig = {
-        title: 'Select a file',
-        buttonLabel: 'This one will do',
+        title: 'Select video files',
+        buttonLabel: 'Validate Selection',
+        filters: [
+            { name: 'Movies', extensions: ['mkv', 'avi', 'mp4', "m4v", "webm", "ogv"] }
+        ],
         properties: ['openFile', 'multiSelections']
     };
     
     electron.openDialog('showOpenDialog', dialogConfig)
     .then( (result) => {
-        // console.log(result)
-        // console.log('urlPath video local', result?.filePaths[0])
         window.videoPlayer.src = result?.filePaths[0]
         window.videoPlayer.play()
 
@@ -51,10 +53,12 @@ function createPlaylist(list){
         let videoNeo = document.createElement('li')
         let delButton = document.createElement('button')
         delButton.className = "delete is-small"
-        delButton.onclick = (event) => {
-            console.log("remove !!!")
+
+        delButton.addEventListener('dblclick', function (event) {
+            console.log("db click")
             removeVideo(event.srcElement.parentNode)
-        }
+        });
+
         videoNeo.innerHTML = `<span class="hand">  </span>${filename}`
         videoNeo.setAttribute("path", source);
         videoNeo.setAttribute("index", playlist.getElementsByTagName('li').length);
@@ -69,8 +73,6 @@ function createPlaylist(list){
         // console.log("window.playlist", window.playlist);
     })
 }
-
-
 
 function removeVideo(val) {
     var emptyFlag = document.getElementById('emptyFlag')
@@ -93,6 +95,8 @@ function removeVideo(val) {
     //update playlist cache 
     localStorage.setItem('playlist', currentPlaylist.join("|"));
 }
+
+
 
 // Init playlist
 document.addEventListener('DOMContentLoaded', ()=> {

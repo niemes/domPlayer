@@ -25,110 +25,166 @@
   <script type="text/javascript" src="./assets/js/libs/jquery.min.js"></script>
   <script type="text/javascript" src="./assets/js/libs/jquery-ui.js"></script>
   <script type="text/javascript" src="./assets/js/libs/bulma-slider.min.js"></script>
-  <script type="text/javascript" src="./assets/js/xNotif.js"></script>
-  <link rel="stylesheet" type="text/css" href="./assets/css/jquery-ui.css"/>
+  <script type="text/javascript" src="./assets/js/libs/bulma-toast.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="./assets/css/jquery-ui.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-  crossorigin="anonymous" referrerpolicy="no-referrer" />
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="./assets/js/libs/Sortable.min.js"></script>
 
   <script>
     // console.log("INIT !")
     // if (typeof peerJsInit === "function") peerJsInit();
-    
+
   </script>
-  
+
   <div class="drag-widget-container" id="wrap">
   </div>
   <!-- Insert this line after script imports -->
   <script>if (window.module) module = window.module;</script>
-  <script src="./renderer.js"></script>
+  <script src="./renderer.js" type="module"></script>
 
 </head>
 
 <body>
-  <div id="electron-titlebar" class="drag top-titlebar"  style="-webkit-app-region: drag">
+  <div id="electron-titlebar" class="drag top-titlebar" style="-webkit-app-region: drag">
     <nav style="-webkit-app-region: drag; -webkit-user-select: none;">
     </nav>
   </div>
 
-  
-  <div id="panel" class="panel is-primary container card">
-    <p class="panel-heading" id="headerTopbar">
 
+  <div id="panel" class="panel is-primary container card">
+
+
+    <p class="panel-heading" id="headerTopbar">
       <img src="./assets/domPlayer.png" id="logo">
       DomPlayer Options
     </p>
-    <p class="panel-tabs">
-      <a class="is-active">All</a>
-      <a>Config</a>
-      <a>Controls</a>
-      <a>help</a>
-      <a>About</a>
-      
+    <p class="panel-tabs" id="tabs">
+      <a class="is-active" data-tab="1">Config</a>
+      <a data-tab="2">Controls</a>
+      <a data-tab="3">Help</a>
+      <a data-tab="4">About</a>
     </p>
 
-    <a class="panel-block is-active">
-      <label class="panel-block">
-        <div class="field">
-          <input id="switchExample" type="checkbox" name="switchExample" class="switch is-small" checked="checked">
-          <label for="switchExample">Half Dome mode</label>
+    <div id="tab-content">
+
+      <div class="is-active" data-content="1">
+        <a class="panel-block is-active">
+          <label class="panel-block">
+            <div class="field">
+              <input id="switchExample" type="checkbox" name="switchExample" class="switch is-small" checked="checked">
+              <label for="switchExample">Half Dome mode</label>
+            </div>
+          </label>
+        </a>
+        <div class="panel-block">
+          <button class="button is-small is-rounded" onclick="centerVideo()">
+            <span class="icon is-small">
+              <i class="fas fa-circle"></i>
+            </span>
+            <span>Center video</span>
+          </button>
         </div>
-      </label>
-    </a>
-    <div class="panel-block">
-      <button class="button is-small is-rounded" onclick="centerVideo()">
-        <span class="icon is-small">
-          <i class="fas fa-circle"></i>
-        </span>
-        <span>Center video</span> 
-      </button>
-    </div>
-      <h2 class="title is-5 titles">Playlist</h2>
+        <h2 class="title is-5 titles">Playlist</h2>
 
-      <div class="card">
-        <div class="card-content">
-          <div class="content">
-            <ul id='playlist'><h2 class="title is-5" id="emptyFlag""">Empty...</h2></ul>
+        <div class="card">
+          <div class="card-content">
+            <div class="content">
+              <ul id='playlist'>
+                <h2 class="title is-5" id="emptyFlag""">Empty...</h2>
+              </ul>
+            </div>
           </div>
+          <div class="panel-block">
+            <button class="button is-link is-outlined is-fullwidth" onclick="addVideo()">
+              Add Video
+            </button>
+          </div>
+        </div>
       </div>
-    <div class="panel-block">
-      <button class="button is-link is-outlined is-fullwidth" onclick="addVideo()">
-        Add Video
-      </button>
+  
+      <div class="" data-content="2">
+        <p></p> controls tab
+        <a class="panel-block is-active">CONTROLS tab</a>
+      </div>
+    
+      <div class="" data-content="3">
+        <div class="card">
+          <div class="card-content">
+            <p class="title title is-5">
+              Info
+            </p>
+            <p class="subtitle is-6">
+              Shortcuts
+            </p>
+            <ul id="shortcuts">
+              <li>P - Open/close Panel</li>
+              <li>M - Muted</li>
+              <li>Space - pause/play Video</li>
+            </ul>
+  
+            <p class="subtitle is-6">
+              compatible Videos format
+            </p>
+            <p>
+              All web video formats :
+              mkv / avi / mp4 / m4v / webv / ogv
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="" data-content="4">
+        <a class="panel-block is-active">ABOUT</a>
+        <div class="card">
+          <div class="card-image">
+            <figure class="is-4by3 logoAbout">
+              <img src="./assets/icon_512x512.png" alt="logo domPlayer" style="width: 150px;height: 150px;">
+            </figure>
+          </div>
+          <div class="card-content">
+            <p class="title title is-5">
+              DomPlayer
+            </p>
+            <p class="subtitle is-6">
+              Version v1.0.1
+            </p>
+            <p>
+              Domplayer allow you to easely play a video on an half dome and set the size en position of
+              the video. 
+            </p>
+          </div>
+          <footer class="card-footer">
+            <a href="https://niemes.info"" class="card-footer-item">
+              <span>Made with <span>
+                <span class="icon is-small">
+                  <i class="fas fa-heart"></i>
+                </span>
+                <span>by Niemeskern Kévin</span>
+            </a>
+          </footer>
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-      <div class="card-content">
-        <p class="title title is-5">
-          Info
-        </p>
-        <p class="subtitle is-6">
-          Shortcuts
-        </p>
-        <ul id="shortcuts">
-          <li>P - Open/close Panel</li>
-          <li>M - Muted</li>
-          <li>Space - pause/play Video</li>
-        </ul>
-      </div>
-    </div>
   </div>
-</div>
+
 
   <div id="controls">
-    
-    <input class="slider is-fullwidth has-output-tooltip" id="slidControl" step="1" min="0" max="100" value="50" type="range">
-    <progress id="progressBar" class="progress is-info" value="45" max="100">45%</progress>
+    <input class="slider is-fullwidth has-output-tooltip" id="slidControl" step="1" min="0" max="100" value="50"
+      type="range">
+    <progress id="progressBar" class="progress is-small is-info" value="45" max="100">45%</progress>
   </div>
 
-<script src="./assets/js/positions.js"></script>
+  <script src="./assets/js/positions.js"></script>
 
   <script>
-    const Notify = new XNotify("TopLeft");
+
     let optionPanel = document.getElementById('panel')
     let progres = document.getElementById('controls')
 
-    function hidepanel(bool){
+
+    function hidepanel(bool) {
       if (!bool) {
         optionPanel.style.right = "15px"
         optionPanel.style.opacity = 1
@@ -140,32 +196,52 @@
       }
     }
 
-    document.addEventListener("keydown", function(event) {
+    function miam(mess, type){
+      bulmaToast.toast({
+        message: mess, 
+        type: type,
+        dismissible: true,
+        duration: 1000,
+        position: "top-left",
+        "single": false,
+        // animate: { in: 'fadeIn', out: 'fadeOut' }
+      })
+    }
+    document.addEventListener("keydown", function (event) {
       // console.log("event.key", event.key)
       let usedKeys = ["p", " ", "m"]
 
-    if (usedKeys.indexOf(event.key) !== -1) { // touche - debug info
+      if (usedKeys.indexOf(event.key) !== -1) { // touche - debug info
         event.preventDefault();
 
-        if (event.key == "m" ) { // m for muted
+        if (event.key == "m") { // m for muted
           if (!videoPlayer.muted) videoPlayer.muted = true
           else videoPlayer.muted = false
+          // notif("success", "mute", videoPlayer.muted)
+          miam( videoPlayer.muted ? "Mute" : "Unmute", 'is-primary' )
         }
-        
-        if (event.key == " " ) { // space for pause
-          if (!videoPlayer.paused) videoPlayer.pause()
-          else videoPlayer.play()
+
+        if (event.key == " ") { // space for pause
+          if (!videoPlayer.paused) {
+            videoPlayer.pause()
+            miam('Video Paused.','is-primary')
+          }
+          else {
+            videoPlayer.play()
+            miam('Video is playing.','is-primary')
+          }
+          
         }
 
         if (event.key === "p") { // P for panel
           event.preventDefault();
-          if(optionPanel.style.opacity == 0) hidepanel(false)
+          if (optionPanel.style.opacity == 0) hidepanel(false)
           else hidepanel(true)
         }
-    }
-});
+      }
+    });
   </script>
-    
+
 </body>
 
 </html>

@@ -245,9 +245,9 @@ function setupScene(scene) {
     }
     // iOS require the video to start muted in order for it to autoplay, so we use a click
     // to enable the sound.
-    document.getElementsByTagName("canvas")[0].addEventListener("click",
-        function() {window.videoPlayer.muted = false;}
-    );
+    // document.getElementsByTagName("canvas")[0].addEventListener("click",
+    //     function() {window.videoPlayer.muted = false;}
+    // );
 
     var texture = new THREE.VideoTexture( window.videoPlayer );
     texture.minFilter = THREE.LinearFilter;
